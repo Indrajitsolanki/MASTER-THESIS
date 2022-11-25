@@ -1,0 +1,30 @@
+# MASTER-THESIS
+LATTICE-BASED POST-QUANTUM CRYPTOGRAPHY
+from qiskit import IBMQ
+from qiskit.utils import QuantumInstance
+from qiskit.algorithms import Shor
+import time
+
+start = time.time()
+
+IBMQ.enable_account(
+    '3a51734fd649440fa9d1684227b1b2d4ad357bae510eada1dda5bbe419e26434bbbc4767fc85610c1d53470220834be8a7558fdc44a3025d96dfdf54e93ac3e2')  # Enter your API token here
+provider = IBMQ.get_provider(hub='ibm-q')
+
+backend = provider.get_backend('ibmq_qasm_simulator')  # Specifies the quantum device
+
+print('\n Shors Algorithm')
+print('--------------------')
+print('\nExecuting...\n')
+
+factors = Shor(QuantumInstance(backend, shots=100, skip_qobj_validation=False))
+
+result_dict = factors.factor(N=13, a=2)  # Where N is the integer to be factored
+result = result_dict.factors
+
+print(result)
+print('\nPress any key to close')
+input()
+
+end = time.time()
+print("Run time of execution of shor program is :", end - start)
