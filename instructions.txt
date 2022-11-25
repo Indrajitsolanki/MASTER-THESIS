@@ -1,0 +1,3 @@
+Use Anaconda Spyder IDE with python verson 3.6 to open and execute 'example_bobalice.py'.
+Or use Python's IDE, and don't forget to select current working directory in which all 
+files are present (ntru.py, poly.py and example_bobalice.py).

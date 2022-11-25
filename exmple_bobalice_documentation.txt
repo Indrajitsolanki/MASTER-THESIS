@@ -1,0 +1,24 @@
+NTRU encryption and decryption in python 3.6
+
+1) Bob is expecting to receive some secure information from Alice
+2) Bob creates an instance of NTRU of with parameters (N=7,p=29,q=491531) 
+   which he makes publically available
+	>>> Bob=Ntru(7,29,491531)
+3) Next he generates a public_key by specifying a function f,g and parameter d
+	>>> f=[1,1,-1,0,-1,1]
+	>>> g=[-1,0,1,1,0,0,-1]
+	>>> d=2
+	>>> Bob.genPublicKey(f,g,2)
+	>>> pub_key=Bob.getPublicKey()
+4) Alice wants to send a secure message to Bob. She sets up another 
+   instance of Ntru using Bob’s original parameters and public
+   key Bob provided
+	>>> Alice=Ntru(7,29,491531)
+	>>> Alice.setPublicKey(pub_key)
+5) She encrypts her message using her instance and a random
+   Ternary polynomial for noise
+	>>> msg=[1,0,1]
+	>>> ranPol=[-1,-1,1,1]
+	>>> encrypt_msg=Alice.encrypt(msg,[-1,-1,1,1])
+6) Finally Bob decrypts message sent to him
+	>>> print Bob.decrypt(encrypt_msg)
