@@ -1,0 +1,58 @@
+# MASTER-THESIS
+LATTICE-BASED POST-QUANTUM CRYPTOGRAPHY
+import math
+import random
+import time
+
+start = time.time()
+q = 13
+nvals = 4
+
+B = []  # random
+e = []  # random
+s = 15
+message = 1
+
+A = random.sample(range(q), nvals)
+
+for x in range(0, len(A)):  # returns the number of characters in the string, adding random A matrix
+    e.append(random.randint(1, 4))  # adds an item to the end of the list, adds value of e in the list
+    B.append((A[x] * s + e[x]) % q)  # b =  as + e mod q  calculation from all the random values above-mentioned
+
+print("Message to send:", message)
+print("Public Key (A):", A)
+print("Public Key (B):", B)
+print("Errors (e):", e)
+
+sample = random.sample(range(nvals - 1), nvals // 4)  # // is to get division result, to choose random samples from A
+print("Sampling", sample)
+
+u = 0
+v = 0
+
+for x in range(0, len(sample)):
+    print("[", A[sample[x]], B[sample[x]], "]", end=' ')
+    u = u + (A[sample[x]])
+
+    v = v + B[sample[x]]
+
+v = v + math.floor(q // 2) * message  # rounds a number down to the nearest integer (rounding)
+
+v = v % q
+u = u % q
+
+print()
+
+print("u:", u)
+print("v:", v)
+
+dec = (v - s * u) % q
+
+print("Result is", dec)
+
+if dec > q / 2:
+    print("Message is a 1")
+else:
+    print("Message is a 0")
+end = time.time()
+print("Run time of execution of LWE program is :", end - start)
